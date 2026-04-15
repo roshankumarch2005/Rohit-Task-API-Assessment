@@ -1,14 +1,21 @@
-const express = require('express');
-const taskRoutes = require('./routes/tasks');
+const express = require("express");
+const taskRoutes = require("./routes/tasks");
 
 const app = express();
 
 app.use(express.json());
-app.use('/tasks', taskRoutes);
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to the Task API! Please use the /tasks endpoint.",
+  });
+});
+
+app.use("/tasks", taskRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Internal server error' });
+  res.status(500).json({ error: "Internal server error" });
 });
 
 const PORT = process.env.PORT || 3000;
